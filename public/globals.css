@@ -1,0 +1,23 @@
+@import url('https://fonts.googleapis.com/css2?family=Great+Vibes&family=Playfair+Display:wght@400;500;700&display=swap');
+
+:root {
+  --color-be: #f5e6ca;
+  --color-brown: #6b4f4f;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  background-color: var(--color-be);
+  color: var(--color-brown);
+  font-family: 'Playfair Display', serif;
+  transition: background-color 0.5s ease, color 0.5s ease;
+}
+
+h1, h2, h3 {
+  font-family: 'Great Vibes', cursive;
+}
+
+button {
+  font-family: inherit;
+}
