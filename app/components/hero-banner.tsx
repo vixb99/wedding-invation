@@ -105,10 +105,10 @@ export default function HeroBannerWedding() {
       ></div>
 
       <div className="relative z-10 text-center px-4">
-        <h3 className="text-xl md:text-2xl mb-2 italic">
+        <h3 className="text-xl text-[#FF00CC]  md:text-2xl mb-2 italic">
           Cùng với gia đình hai bên
         </h3>
-        <h1 className="text-5xl md:text-7xl text-[#b8926c] mb-4 drop-shadow-lg text-center">
+        <h1 className="text-5xl md:text-7xl text-[#FF0066] mb-4 drop-shadow-lg text-center">
           <span className="block">Chấn Vĩ</span>
           <span className="block text-4xl md:text-5xl my-2">&</span>
           <span className="block">Thị Hiền 💍</span>
