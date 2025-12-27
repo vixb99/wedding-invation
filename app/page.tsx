@@ -1,15 +1,12 @@
 import HeroBannerWedding from "./components/hero/HeroBannerWedding";
-import WishDashboard from "./components/wishes/WishDashboard";
-import WishForm from "./components/wishes/WishForm";
+import WishDashboard from "./components/wishes/WishBubble";
+import WishForm from "./components/wishes/WishPopup";
+import WishPage from "./components/wishes/HeroWishLive";
 
 export default function Home() {
   return (
     <main>
       <HeroBannerWedding />
-      <div id="wishes" className="relative min-h-screen bg-[#fffaf3] py-24 px-6">
-        <WishForm />
-        <WishDashboard />
-      </div>
     </main>
   );
 }
