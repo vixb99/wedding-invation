@@ -12,6 +12,10 @@ export default function HeroBannerWedding() {
   const timeLeft = useCountdown("2026-03-28T18:00:00");
   const { audioRef, isPlaying, toggle } = useAudioFade();
 
+  const scrollToWishes = () => {
+    document.getElementById("wishes")?.scrollIntoView({ behavior: "smooth" });
+  };
+
   return (
     <section
       className="relative h-screen flex items-center 
@@ -43,6 +47,19 @@ export default function HeroBannerWedding() {
         </h1>
 
         <Countdown time={timeLeft} />
+
+        <button
+          onClick={scrollToWishes}
+          className="
+      mt-6 px-8 py-3 rounded-full
+      bg-[#b8926c] text-white text-lg
+      shadow-lg backdrop-blur-md
+      hover:bg-[#a07b59]
+      transition-all duration-300
+    "
+        >
+          Gửi lời chúc 💌
+        </button>
       </div>
 
       {/* Toggle nhạc */}

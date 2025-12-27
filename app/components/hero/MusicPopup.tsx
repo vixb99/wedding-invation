@@ -11,7 +11,7 @@ export default function MusicPopup({ onAccept, onDecline, titleClass }: Props) {
         <h2 className={`${titleClass} text-4xl text-[#9c6b4e] mb-4`}>
           🎶 Một chút nhạc cho tình yêu nhé?
         </h2>
-        <p className="text-lg mb-6">
+        <p className="text-lg mb-6 text-black">
           Một bản piano dịu dàng sẽ khiến khung cảnh thêm ấm áp hơn...
         </p>
         <div className="flex justify-center gap-6">
