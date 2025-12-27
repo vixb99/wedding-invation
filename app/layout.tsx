@@ -1,3 +1,4 @@
+import SparkleRain from './components/effect/SparkleRain';
 import './globals.css'
 import type { Metadata } from 'next'
 
@@ -37,7 +38,9 @@ export default function RootLayout({
 }) {
   return (
     <html lang="vi">
-      <body className="relative">{children}</body>
+      <body className="relative">
+         <SparkleRain />
+        {children}</body>
     </html>
   )
 }
