@@ -69,21 +69,21 @@ body {
 @keyframes liveBubble {
   0% {
     opacity: 0;
-    transform: translateY(40px);
+    transform: translateY(-60px);
   }
   15% {
     opacity: 1;
   }
   80% {
     opacity: 1;
-    transform: translateY(-40px);
+    transform: translateY(-170px);
   }
   100% {
     opacity: 0;
-    transform: translateY(-70px);
+    transform: translateY(-180px);
   }
 }
 
 .animate-live-bubble {
-  animation: liveBubble 6s ease-in-out forwards;
+  animation: liveBubble 5s ease-in-out forwards;
 }
