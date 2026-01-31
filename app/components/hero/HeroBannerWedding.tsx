@@ -6,6 +6,7 @@ import MusicToggle from "./MusicToggle";
 import MusicPopup from "./MusicPopup";
 import { useCountdown } from "../hooks/useCountdown";
 import { useAudioFade } from "../hooks/useAudioFade";
+import { useLanguage } from "../lang/LanguageContext";
 
 /* ---------------- TYPES ---------------- */
 
@@ -13,6 +14,41 @@ type Wish = {
   id: number;
   name: string;
   message: string;
+};
+
+type Lang = "vi" | "en" | "zh";
+
+const TEXT: Record<Lang, any> = {
+  vi: {
+    withFamily: "Cùng với gia đình hai bên",
+    names: ["Chấn Vĩ", "Trương Hiền"],
+    sendWish: "Gửi lời chúc 💌",
+    wishTitle: "Gửi lời chúc 💖",
+    yourName: "Tên của bạn",
+    yourWish: "Lời chúc thân thương...",
+    cancel: "Huỷ",
+    send: "Gửi",
+  },
+  en: {
+    withFamily: "Together with both families",
+    names: ["Chan Vi", "Truong Hien"],
+    sendWish: "Send your wishes 💌",
+    wishTitle: "Send your wishes 💖",
+    yourName: "Your name",
+    yourWish: "Your warm wishes...",
+    cancel: "Cancel",
+    send: "Send",
+  },
+  zh: {
+    withFamily: "謹與雙方家人",
+    names: ["白震煒", "張氏賢"],
+    sendWish: "送上祝福 💌",
+    wishTitle: "送上祝福 💖",
+    yourName: "您的名字",
+    yourWish: "溫馨的祝福...",
+    cancel: "取消",
+    send: "送出",
+  },
 };
 
 /* ---------------- MAIN ---------------- */
@@ -24,8 +60,12 @@ export default function HeroBannerWedding() {
   // QUEUE + CURRENT (livestream core)
   const [queue, setQueue] = useState<Wish[]>([]);
 
-  const timeLeft = useCountdown("2026-03-28T18:00:00");
+  const timeLeft = useCountdown("2026-03-22T18:00:00");
   const { audioRef, isPlaying, toggle } = useAudioFade();
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
 
   /* ---------- LOAD INITIAL WISHES ---------- */
   useEffect(() => {
@@ -38,12 +78,14 @@ export default function HeroBannerWedding() {
             id: Date.now() + i,
             name: w.name,
             message: w.message,
-          }))
+          })),
         );
       });
   }, []);
 
   /* ---------- LIVE STREAM CONTROLLER ---------- */
+  const { lang } = useLanguage();
+  const t = TEXT[lang];
   const [currentWishes, setCurrentWishes] = useState<Wish[]>([]);
 
   useEffect(() => {
@@ -91,7 +133,7 @@ export default function HeroBannerWedding() {
       style={{ backgroundImage: "url('/images/CTIN2142.JPG')" }}
     >
       {/* OVERLAY */}
-      <div className="absolute inset-0 bg-black/10" />
+      <div className="absolute inset-0 bg-black/30" />
       <div
         className={`absolute inset-0 bg-black/40 backdrop-blur-sm
         ${showMusicPopup ? "opacity-100" : "opacity-10"}`}
@@ -100,15 +142,14 @@ export default function HeroBannerWedding() {
       {/* Mobile: text-center. Desktop: text-left */}
       <div className="relative z-10 text-center w-full max-w-xl p-4 md:p-8 md:pr-30 mt-[-10vh] md:mt-0">
         <h3 className="text-lg md:text-xl italic text-white/90 mb-2 font-light tracking-wide">
-          Cùng với gia đình hai bên
+          {t.withFamily}{" "}
         </h3>
 
-       <h1 className="text-5xl md:text-7xl text-[#9c6b4e] mb-4 font-ballet leading-tight">
-          <span className="block">Chấn Vĩ</span>
+        <h1 className="text-5xl md:text-7xl text-[#9c6b4e] mbs-4 font-ballet leading-tight">
+          <span className="block">{t.names[0]}</span>
           <span className="block">&</span>
-          <span className="block">Thị Hiền</span>
+          <span className="block">{t.names[1]}</span>
         </h1>
-
         <Countdown time={timeLeft} />
 
         <button
@@ -119,7 +160,7 @@ export default function HeroBannerWedding() {
                      hover:bg-[#a07b59] hover:scale-105
                      active:scale-95 transition-all duration-300"
         >
-          Gửi lời chúc 💌
+          {t.sendWish}
         </button>
       </div>
       {/* --- LIVE BUBBLES CONTAINER --- */}
@@ -148,7 +189,11 @@ export default function HeroBannerWedding() {
       <audio ref={audioRef} loop src="/audio/music.mp3" />
       {/* POPUP SEND WISH */}
       {showWishPopup && (
-        <WishPopup onClose={() => setShowWishPopup(false)} onSend={sendWish} />
+        <WishPopup
+          onClose={() => setShowWishPopup(false)}
+          onSend={sendWish}
+          t={t}
+        />
       )}
     </section>
   );
@@ -183,9 +228,11 @@ function WishBubble({ wish }: { wish: Wish }) {
 function WishPopup({
   onClose,
   onSend,
+  t,
 }: {
   onClose: () => void;
   onSend: (w: { name: string; message: string }) => void;
+  t: any;
 }) {
   const [name, setName] = useState("");
   const [message, setMessage] = useState("");
@@ -200,43 +247,42 @@ function WishPopup({
     <div className="fixed inset-0 bg-black/60 z-50 flex items-center justify-center px-4">
       <div className="bg-white rounded-[2rem] p-6 md:p-8 w-[90%] max-w-[360px] shadow-2xl animate-fade-in-up">
         <h3 className="font-ballet text-3xl md:text-4xl text-center mb-6 text-[#b8926c]">
-          Gửi lời chúc 💖
+          {t.wishTitle}
         </h3>
 
         <div className="space-y-4">
           <input
-            className="w-full px-5 py-3 rounded-full border border-gray-200 
-                       focus:outline-none focus:border-[#b8926c] focus:ring-1 focus:ring-[#b8926c]
-                       bg-gray-50 text-black placeholder:text-gray-400 transition-all"
-            placeholder="Tên của bạn"
+            placeholder={t.yourName}
             value={name}
             onChange={(e) => setName(e.target.value)}
+            className="w-full mb-3 px-5 py-3 rounded-full border bg-gray-50 text-gray-500"
           />
 
           <textarea
-            className="w-full px-5 py-3 rounded-2xl border border-gray-200 
-                       focus:outline-none focus:border-[#b8926c] focus:ring-1 focus:ring-[#b8926c]
-                       bg-gray-50 text-black placeholder:text-gray-400 transition-all resize-none"
-            placeholder="Lời chúc thân thương..."
+            placeholder={t.yourWish}
             rows={3}
             value={message}
             onChange={(e) => setMessage(e.target.value)}
+            className="w-full px-5 py-3 rounded-2xl border bg-gray-50 resize-none text-gray-500"
           />
         </div>
 
         <div className="flex gap-3 mt-6">
           <button
             onClick={onClose}
-            className="flex-1 py-2.5 rounded-full border border-gray-300 text-gray-500 font-medium hover:bg-gray-100 transition-colors"
+            className="flex-1 py-2 rounded-full border text-gray-500"
           >
-            Huỷ
+            {t.cancel}
           </button>
           <button
-            onClick={submit}
-            className="flex-1 py-2.5 rounded-full bg-[#b8926c] text-white font-medium 
-                       shadow-md hover:bg-[#a07b59] transition-colors"
+            onClick={() => {
+              if (!name || !message) return;
+              onSend({ name, message });
+              onClose();
+            }}
+            className="flex-1 py-2 rounded-full bg-[#b8926c] text-white"
           >
-            Gửi
+            {t.send}
           </button>
         </div>
       </div>
