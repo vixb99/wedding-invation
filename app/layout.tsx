@@ -5,6 +5,9 @@ import type { Metadata } from "next";
 
 // app/layout.tsx
 export const metadata = {
+  icons: {
+    icon: '/icon.png',
+  },
   title: "Trang cưới Chấn Vĩ & Trương Hiền 💍",
   description:
     "Trang cưới của chúng tôi, lưu lại những khoảnh khắc hạnh phúc nhất 💖",
