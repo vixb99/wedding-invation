@@ -2,6 +2,7 @@ import SparkleRain from "./components/effect/SparkleRain";
 import { LanguageProvider } from "./components/lang/LanguageContext";
 import "./globals.css";
 import type { Metadata } from "next";
+import { Analytics } from '@vercel/analytics/next';
 
 // app/layout.tsx
 export const metadata = {
@@ -45,7 +46,8 @@ export default function RootLayout({
     <html lang="vi">
       <body className="relative">
         <SparkleRain />
-        <LanguageProvider>{children}</LanguageProvider>\
+        <LanguageProvider>{children}</LanguageProvider>
+        <Analytics />
       </body>
     </html>
   );
